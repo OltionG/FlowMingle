@@ -21,6 +21,7 @@ export default function Register() {
     email: "",
     password: "",
     confirmPassword: "",
+    role: "Member"
   });
 
   useEffect(() => {
@@ -64,11 +65,12 @@ export default function Register() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (handleValidation()) {
-      const { email, username, password } = values;
+      const { email, username, password, role } = values;
       const { data } = await axios.post(registerRoute, {
         username,
         email,
         password,
+        role
       });
 
       if (data.status === false) {
@@ -90,7 +92,7 @@ export default function Register() {
         <form action="" onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
             <img src={Logo} alt="logo" />
-            <h1>snappy</h1>
+            
           </div>
           <input
             type="text"

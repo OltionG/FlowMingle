@@ -11,6 +11,7 @@ module.exports.login = async (req, res, next) => {
     if (!isPasswordValid)
       return res.json({ msg: "Incorrect Username or Password", status: false });
     delete user.password;
+    
     return res.json({ status: true, user });
   } catch (ex) {
     next(ex);
@@ -31,6 +32,7 @@ module.exports.register = async (req, res, next) => {
       email,
       username,
       password: hashedPassword,
+      role: "Member",
     });
     delete user.password;
     return res.json({ status: true, user });
@@ -46,6 +48,7 @@ module.exports.getAllUsers = async (req, res, next) => {
       "username",
       "avatarImage",
       "_id",
+      "role",
     ]);
     return res.json(users);
   } catch (ex) {
