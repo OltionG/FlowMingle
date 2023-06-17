@@ -1,7 +1,31 @@
-import React,{Component} from "react";
+import React,{Component, useState, useEffect} from "react";
 import '../main.css'
 import {BrowserRouter, Route, Routes, NavLink, useNavigate} from 'react-router-dom';
-function Header(props){   
+import axios from "axios";
+import { logoutRoute } from "../utils/APIRoutes";
+function Header(props){
+  const navigate = useNavigate();
+  const handleClick = async () => {
+    const id = await JSON.parse(
+      localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
+    )._id;
+    const data = await axios.get(`${logoutRoute}/${id}`);
+    if (data.status === 200) {
+      localStorage.clear();
+      navigate("/login");
+    }
+  }; 
+  const [userName, setUserName] = useState("");
+  useEffect(() => {
+    const asyncFunction = async() => {
+    setUserName(
+      await JSON.parse(
+        localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
+      ).username
+    );
+    };
+    asyncFunction();
+  }, []);  
           return(    
               <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", padding: "0.5% 3%", background: "white", position: "fixed", width: "100%", zIndex: "1", boxShadow: '0 1px 20px rgba(0 0 0.2)'}}>
               <NavLink to="../home" className="logo" aria-label="homepage">flow.</NavLink>
@@ -18,8 +42,8 @@ function Header(props){
         </nav>
         <nav>
           <ul className="nav_list">
-           <li className="nav_list-item"><NavLink to="../login" className="nav_link nav_link--btn">Login</NavLink></li>
-           <li className="nav_list-item"><NavLink to="../register" className="nav_link nav_link--btn nav_link--btn--highlight">Register</NavLink></li>
+           <li className="nav_list-item"><NavLink to="../login" className="nav_link nav_link--btn">{userName}</NavLink></li>
+           <li className="nav_list-item"><NavLink to="../register" className="nav_link nav_link--btn nav_link--btn--highlight" onClick={handleClick}>Log Out</NavLink></li>
   
           </ul>
         </nav>

@@ -9,6 +9,7 @@ import { About } from "./pages/About";
 import SetAvatar from "./components/SetAvatar";
 import { Contacts } from "./pages/Contacts"
 import Dashboard from "./components/Dashboard";
+import News from "./pages/News";
 export default function App() {
   return (
     <BrowserRouter>
@@ -17,10 +18,11 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/setAvatar" element={<SetAvatar />} />
         <Route path="/chat" element={<Chat />} />
-        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contacts" element={<Contacts />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/news" element={<News />} />
       </Routes>
     </BrowserRouter>
   );
